@@ -3,32 +3,512 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brewing Friendship</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <title>Brewing Friendship - Collaborative 8-Bit Brewing Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Press+Start+2P:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; padding: 0; min-height: 100vh; font-family: 'Montserrat', Arial, sans-serif; background: #f7f5f2; color: #222; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .container { text-align: center; padding: 2rem; }
-    h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 1px; }
-    p { font-size: 1.2rem; color: #666; margin-bottom: 2rem; }
-    .contact-btn { display: inline-block; padding: 0.75rem 2rem; font-size: 1rem; border: none; border-radius: 25px; background: #222; color: #fff; cursor: pointer; transition: background 0.2s; margin-bottom: 2rem; text-decoration: none; }
-    .contact-btn:hover { background: #444; }
-    .socials { display: flex; justify-content: center; gap: 1.2rem; margin-top: 1rem; }
-    .social-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #eee; color: #222; text-decoration: none; font-size: 1.3rem; transition: background 0.2s, color 0.2s; }
-    .social-btn:hover { background: #222; color: #fff; }
-    @media (max-width: 600px) { h1 { font-size: 2rem; } .container { padding: 1rem; } }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #8E44AD 0%, #9B59B6 50%, #BB8FCE 100%);
+      color: #ffffff;
+      line-height: 1.6;
+      image-rendering: pixelated;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 0 2rem;
+    }
+
+    .logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #F1C40F, #F39C12);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .tagline {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .concept-explanation {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      backdrop-filter: blur(10px);
+      border: 3px solid #F1C40F;
+      box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+    }
+
+    .concept-explanation h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #F1C40F;
+    }
+
+    .concept-explanation p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+    }
+
+    .features {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #F1C40F;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 2px solid #F1C40F;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(241, 196, 15, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(241, 196, 15, 0.3);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #F1C40F;
+      font-weight: 600;
+    }
+
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+    }
+
+    .brews {
+      padding: 4rem 0;
+      background: rgba(241, 196, 15, 0.05);
+      margin: 2rem 0;
+      border-radius: 12px;
+      border: 2px solid rgba(241, 196, 15, 0.3);
+    }
+
+    .brews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .brew-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(241, 196, 15, 0.5);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .brew-card:hover {
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .brew-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .brew-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      color: #F1C40F;
+    }
+
+    .brew-desc {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    .game-preview {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .game-placeholder {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4rem 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      backdrop-filter: blur(10px);
+      border: 3px dashed rgba(241, 196, 15, 0.5);
+      position: relative;
+    }
+
+    .game-placeholder h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #F1C40F;
+    }
+
+    .game-placeholder p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pixel-art {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .pixel-block {
+      width: 20px;
+      height: 20px;
+      background: #F1C40F;
+      border: 1px solid #F39C12;
+      animation: pulse 2s infinite;
+    }
+
+    .pixel-block:nth-child(2n) {
+      background: #F39C12;
+      animation-delay: 0.5s;
+    }
+
+    .pixel-block:nth-child(3n) {
+      background: #E67E22;
+      animation-delay: 1s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    .newsletter {
+      padding: 4rem 0;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin: 2rem 0;
+      backdrop-filter: blur(10px);
+      border: 2px solid #F1C40F;
+    }
+
+    .newsletter h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #F1C40F;
+    }
+
+    .newsletter p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-input {
+      padding: 1rem;
+      border: 2px solid rgba(241, 196, 15, 0.5);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 1rem;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .newsletter-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #F1C40F, #F39C12);
+      color: #ffffff;
+      border: 2px solid #E67E22;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(241, 196, 15, 0.4);
+    }
+
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 2px solid rgba(241, 196, 15, 0.3);
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-link {
+      color: #F1C40F;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-link:hover {
+      color: #F39C12;
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .tagline {
+        font-size: 1.1rem;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .newsletter-input {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
   </style>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>☕</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%238E44AD'/><rect x='20' y='20' width='60' height='60' fill='%23F1C40F'/><rect x='30' y='30' width='40' height='40' fill='%23F39C12'/><rect x='40' y='40' width='20' height='20' fill='%23E67E22'/></svg>">
 </head>
 <body>
   <div class="container">
-    <h1>Brewing Friendship</h1>
-    <p>Pouring connections, one cup at a time.</p>
-    <a href="#" class="contact-btn">Contact</a>
-    <div class="socials">
-      <a href="#" class="social-btn" title="Instagram" aria-label="Instagram">I</a>
-      <a href="#" class="social-btn" title="Facebook" aria-label="Facebook">F</a>
-      <a href="#" class="social-btn" title="Twitter" aria-label="Twitter">T</a>
+    <header>
+      <h1 class="logo">Brewing Friendship</h1>
+      <p class="tagline">Collaborate, brew, and discover in this magical 8-bit world!</p>
+    </header>
+
+    <div class="concept-explanation">
+      <h2>🧪 The Brewing System</h2>
+      <p>Brewing Friendship is a collaborative 8-bit game where players work together to create the most amazing brews. Combine ingredients from different players, discover secret recipes, and unlock powerful effects through teamwork and friendship!</p>
+      <p>Every brew you create can be shared with friends, every recipe you discover can be taught to others, and every collaboration unlocks new possibilities. The best brews require ingredients from multiple players, making friendship the key to success!</p>
     </div>
+
+    <section class="features">
+      <h2 class="section-title">Brewing Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🧪</div>
+          <h3>Collaborative Brewing</h3>
+          <p>Combine ingredients from multiple players to create unique brews. Some recipes require rare ingredients that only specific players can grow!</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🌟</div>
+          <h3>Special Effects</h3>
+          <p>Discover brews that grant temporary abilities, unlock secret areas, or create amazing visual effects. The rarer the ingredients, the more powerful the effects!</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h3>Recipe Discovery</h3>
+          <p>Experiment with different ingredient combinations to discover new recipes. Share your findings with friends and learn from their discoveries!</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Brewing Challenges</h3>
+          <p>Participate in community brewing challenges where everyone works together to create massive collaborative brews with incredible effects.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🎁</div>
+          <h3>Gift Brewing</h3>
+          <p>Create special brews as gifts for friends. The more you collaborate, the more exclusive brewing recipes you unlock!</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Global Brewing</h3>
+          <p>Connect with brewers worldwide. Some ingredients only grow in specific regions, making global collaboration essential!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="brews">
+      <h2 class="section-title">Magical Brews</h2>
+      <div class="brews-grid">
+        <div class="brew-card">
+          <div class="brew-icon">✨</div>
+          <h3 class="brew-title">Starshine Elixir</h3>
+          <p class="brew-desc">Grants night vision and reveals hidden paths</p>
+        </div>
+        
+        <div class="brew-card">
+          <div class="brew-icon">🔥</div>
+          <h3 class="brew-title">Phoenix Potion</h3>
+          <p class="brew-desc">Temporary fire resistance and enhanced speed</p>
+        </div>
+        
+        <div class="brew-card">
+          <div class="brew-icon">🌊</div>
+          <h3 class="brew-title">Ocean's Breath</h3>
+          <p class="brew-desc">Allows underwater breathing and swimming</p>
+        </div>
+        
+        <div class="brew-card">
+          <div class="brew-icon">🌙</div>
+          <h3 class="brew-title">Lunar Essence</h3>
+          <p class="brew-desc">Enhances all magical abilities temporarily</p>
+        </div>
+        
+        <div class="brew-card">
+          <div class="brew-icon">🌈</div>
+          <h3 class="brew-title">Rainbow Blend</h3>
+          <p class="brew-desc">Changes player appearance and grants luck</p>
+        </div>
+        
+        <div class="brew-card">
+          <div class="brew-icon">⚡</div>
+          <h3 class="brew-title">Thunder Brew</h3>
+          <p class="brew-desc">Lightning powers and enhanced reflexes</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-preview">
+      <h2 class="section-title">8-Bit Brewing World</h2>
+      <div class="game-placeholder">
+        <h3>Pixelated Brewing Paradise</h3>
+        <p>Explore a charming 8-bit world where collaboration is key to brewing success. Trade ingredients, share recipes, and create amazing brews together in this magical brewing adventure!</p>
+        <div class="pixel-art">
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+          <div class="pixel-block"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <h3>Join the Brewing Revolution!</h3>
+      <p>Be among the first to experience this magical 8-bit brewing world. Sign up for early access and exclusive brewing recipes! 🧪</p>
+      <form class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Enter your email for early access" required>
+        <button type="submit" class="btn btn-primary">Start Brewing</button>
+      </form>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <p>&copy; 2024 Brewing Friendship. Building friendships through collaborative brewing adventures.</p>
+        <p>🧪 Every brew tells a story of friendship and collaboration 🧪</p>
+        <div class="social-links">
+          <a href="#" class="social-link">📱</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">📸</a>
+          <a href="#" class="social-link">🎮</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </body>
 </html> 
